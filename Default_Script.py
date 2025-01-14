@@ -100,4 +100,4 @@ scene F2, store
 bg_color white 
 
 #* 7. Save
-save "/Users/pai.suryadarshan/Desktop/Academics/Year_3/Chem,Disease & Therapy/My_PyMol/{Name_Of_File}.pse"
+save /Users/pai.suryadarshan/Desktop/Academics/Year_3/ChemDisease_and_Therapy/My_PyMol/{Name_,_Of_,_File}.pse

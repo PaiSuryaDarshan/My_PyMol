@@ -48,3 +48,6 @@ scene F2, store
 
 #* 6. Publication Final Touch ###
 bg_color white 
+
+#* 7. Save
+save /Users/pai.suryadarshan/Desktop/Academics/Year_3/ChemDisease_and_Therapy/My_PyMol/Trial.pse

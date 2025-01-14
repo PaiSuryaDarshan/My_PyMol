@@ -1,6 +1,6 @@
  # * Default Script
 
-#* 1. Retrieving the PDB file
+#* 1. Retrieving the PDB file ###
 
 # Close / Erase code
 
@@ -8,17 +8,17 @@
 fetch {{PDB ID}}, {{Name_for_Object}}, async=0  # aysnc=0 -> Prevents any code beneath from 
                                                 # running till this one is completed
 
-#* 2. Establishing Selections and Objects
+#* 2. Establishing Selections and Objects ###
 
 # Create Object called {{Name_of_choice}}, selecting residues from A to B 
 create SFilter, resi {{A-B}}
 
-# Name Selection WITHOUT creating a new object
+# Name and isolate a Selection WITHOUT creating a new object
 select {{residues/ion}}, name {{name_of_choice_for_selection}}
 
 deselect
 
-#* 3. Visualisation
+#* 3. Visualisation ###
 
 # Removing Residues or molecules (Useful to remove solvents like water)
 remove resn {{solvent_name}}  # water --> HOH
@@ -71,7 +71,7 @@ util.cbaw {{ion}} # Uses the Correct colour code associated with the ion.
 
 # ----------- PyMol Theory 1.2 -----------
 
-#* 3. Orientation
+#* 3. Orientation ###
 
 # Step 1: Adjust molecule to desired view
 # Step 2: You get view to obtain the coordinates
@@ -80,11 +80,11 @@ get_view
 # Step 3:Copy the coordinates
 # Paste 'Set_View' command copied from log  to here
 
-#* 4. Save Scene
+#* 4. Save Scene ###
 
 scene F1, store
 
-#* 5. New Scene
+#* 5. New Scene ###
 hide sticks, SFilter
 create {{Name_of_interest_A}}, resi {{x}+{g}+{c}+{y}+{A}}
 as sticks, {{Name_of_interest_A}}
@@ -96,5 +96,8 @@ get_view
 
 scene F2, store
 
-#* 6. Publication Final Touch
+#* 6. Publication Final Touch ###
 bg_color white 
+
+#* 7. Save
+save "/Users/pai.suryadarshan/Desktop/Academics/Year_3/Chem,Disease & Therapy/My_PyMol/{Name_Of_File}.pse"

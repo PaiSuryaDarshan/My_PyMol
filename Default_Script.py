@@ -10,7 +10,7 @@ fetch {{PDB ID}}, {{Name_for_Object}}, async=0  # aysnc=0 -> Prevents any code b
 
 #* 2. Establishing Selections and Objects
 
-# Create Object called select filter, selecting residues from A to B 
+# Create Object called {{Name_of_choice}}, selecting residues from A to B 
 create SFilter, resi {{A-B}}
 
 # Name Selection WITHOUT creating a new object
@@ -51,8 +51,8 @@ as sticks, Sfilter
 # ! "named selection" rather than an object will  
 # ! create holes in your current visualisation!
 
-# Here we used "create SFilter, resi {{A-B}}"" 
-# and NOT "select resi {{A-B}}, name {{SFilter}}" 
+# Here we used "create {{Name_of_choice}}, resi {{A-B}}""  
+# and NOT "select resi {{A-B}}, name {{Name_of_choice}}" 
 
 # ----------- PyMol Theory 1.1 -----------
 
@@ -75,7 +75,26 @@ util.cbaw {{ion}} # Uses the Correct colour code associated with the ion.
 
 # Step 1: Adjust molecule to desired view
 # Step 2: You get view to obtain the coordinates
+get_view
 
+# Step 3:Copy the coordinates
+# Paste 'Set_View' command copied from log  to here
 
-# Step 3:Copy paste the coordinates and save it to a variable
+#* 4. Save Scene
 
+scene F1, store
+
+#* 5. New Scene
+hide sticks, SFilter
+create {{Name_of_interest_A}}, resi {{x}+{g}+{c}+{y}+{A}}
+as sticks, {{Name_of_interest_A}}
+util.cbaw {{Name_of_interest_A}}
+hide {{representation}}, resi {{X}+{Z}} # representation = sticks, sphere etc.
+
+get_view
+# copy-paste
+
+scene F2, store
+
+#* 6. Publication Final Touch
+bg_color white 

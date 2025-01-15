@@ -1,5 +1,4 @@
-
-open {{PDB}};
+open 4w6z;
 style stick; 
 hide bonds, atoms;
 show car;

@@ -1,0 +1,17 @@
+
+open {{PDB}};
+style stick; 
+hide bonds, atoms;
+show car;
+view orient;
+turn y 90;
+set bg white;
+car style modeH wrap;
+lighting gentle;
+set sil T;
+set silhouettedepth 0.02;
+rainbow palette Purples-5;
+sel :{{ROI}}, {{ROI}}, {{ROI}};
+show sel bonds;
+color sel byelement;
+transparency 0 car; 			## Not Recommended to use 1 withouth checking ##

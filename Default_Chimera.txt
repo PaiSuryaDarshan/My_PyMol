@@ -8,7 +8,7 @@ set bg white;
 car style modeH wrap;
 lighting gentle;
 set sil T;
-set silhouettedepth 0.02;
+set silhouettedepth 0.05;
 rainbow palette Purples-5;
 sel :{{ROI}}, {{ROI}}, {{ROI}};
 show sel bonds;

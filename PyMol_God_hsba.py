@@ -1,4 +1,17 @@
 from pymol import cmd
+
+#* CODE RUN
+
+# Win64: 
+"""
+run D:\Important Stuff\CODE N' Shi\My_PyMol\PyMol_God_hsba.py
+"""
+
+# Darwin:
+"""
+run 
+"""
+
 print("PyMol_God.py imported successfully.")
 
 """

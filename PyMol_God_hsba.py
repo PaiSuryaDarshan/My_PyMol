@@ -1,11 +1,10 @@
 from pymol import cmd
 
 
-
 #* CODE RUN
 
 #! Note To User: This only works if you launch VSCode through Anaconda Navigator
-#! 
+#! conda install -c conda-forge -c schrodinger pymol-bundle
 
 # Win64: 
 """
@@ -14,7 +13,7 @@ run D:\Important Stuff\CODE N' Shi\My_PyMol\PyMol_God_hsba.py
 
 # Darwin:
 """
-run 
+run /Users/pai.suryadarshan/Desktop/Academics/Year_3/ChemDisease_and_Therapy/CW/My_PyMol/PyMol_God_hsba.py
 """
 
 print("PyMol_God.py imported successfully.")
@@ -39,6 +38,10 @@ def hello_world(name="!"):
 
 def create_object_from_resi(name, selection):
     cmd.create(str(name), f"resi {selection}")
+    return
+
+def extract_object_from_resi(name, selection):
+    cmd.extract(str(name), f"resi {selection}")
     return
 
 def create_object_from_selection(name):
@@ -90,7 +93,8 @@ def measure_polar_contacts(Name_of_ligand):
 
 #*### Main ###*#
 
-#* Haylee Style Binding Analysis
+#* Haylee Style Binding Analysis (HSBA)
+
 @cmd.extend
 def hsba():
 
@@ -119,16 +123,7 @@ def hsba():
 
     #* CODE RUN
 
-    # Win64: 
-    """
-    run D:\Important Stuff\CODE N' Shi\My_PyMol\PyMol_God_hsba.py
-    """
-
-    # Darwin:
-    # 
-
-
-    create_object_from_resi(Name_of_ligand, Ligand_residue_number)
+    extract_object_from_resi(Name_of_ligand, Ligand_residue_number)
 
     select_ligand(Ligand_residue_number)
     select_water_nearby(radius_of_water)
@@ -142,8 +137,6 @@ def hsba():
 
     hide_obj(Obj_property_to_Hide, Obj_name_to_hide)
     hide_cartoon(representation_to_hide, Obj_whose_cartoon_you_want_to_Hide)
-
-    delete_obj(Obj_name_to_delete)
 
     find_polar_contacts(Name_of_ligand)
     measure_polar_contacts(Name_of_ligand)

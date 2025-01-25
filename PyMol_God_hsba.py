@@ -1,10 +1,13 @@
 from pymol import cmd
 
-
 #* CODE RUN
 
 #! Note To User: This only works if you launch VSCode through Anaconda Navigator
-#! conda install -c conda-forge -c schrodinger pymol-bundle
+#TODO | If on a MacOS: 
+# pip install PyQt5
+# conda install -c conda-forge -c schrodinger pymol-bundle
+#TODO | If on a WinOS: 
+# conda install -c conda-forge -c schrodinger pymol-bundle
 
 # Win64: 
 """
@@ -100,9 +103,9 @@ def hsba():
 
     #* PARAMETERS
 
-    filename = "pdb2ydo.pdb"
+    filename = "protein.pdb"
 
-    Name_of_ligand = "ADN" 
+    Name_of_ligand = "LIG" 
     Ligand_residue_number = 400
 
     radius_of_binding = 8

@@ -87,7 +87,6 @@ def find_polar_contacts(Name_of_ligand):
     cmd.dist(f"{Name_of_ligand}_polar_conts",f"{Name_of_ligand}",f"(not {Name_of_ligand})",quiet=1,mode=2,label=0,reset=1)
     cmd.enable(f"{Name_of_ligand}_polar_conts")
     return
-    
 
 def measure_polar_contacts(Name_of_ligand):
     cmd.show("labels", f"{Name_of_ligand}_polar_conts")
@@ -102,7 +101,8 @@ def measure_polar_contacts(Name_of_ligand):
 def hsba():
 
     #* PARAMETERS
-
+    #* Default PARAMETERS here
+    """
     filename = "protein.pdb"
 
     Name_of_ligand = "LIG" 
@@ -123,6 +123,30 @@ def hsba():
     Obj_whose_cartoon_you_want_to_Hide = "Binding_pocket"
 
     Obj_name_to_delete = filename[:-4]
+    """
+
+    #* Enter PRESET PARAMETERS from Notebook(.ipynb) here
+    filename = "pdb2ydo.pdb"
+
+    Name_of_ligand = "ADN" 
+    Ligand_residue_number = 400
+
+    radius_of_binding = 8
+    representation_pocket = "lines"
+
+    radius_of_water = 4
+    representation_water = "nb_spheres"
+
+    Name_of_Full_binding_pocket = "Binding_pocket"
+
+    Obj_property_to_Hide = "everything"
+    Obj_name_to_hide = filename[:-4]
+
+    representation_to_hide = "cartoon"
+    Obj_whose_cartoon_you_want_to_Hide = "Binding_pocket"
+
+    Obj_name_to_delete = filename[:-4]
+
 
     #* CODE RUN
 

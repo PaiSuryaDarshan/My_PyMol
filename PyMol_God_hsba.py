@@ -1,4 +1,5 @@
 from pymol import cmd
+from pymol import util
 
 #* CODE RUN
 
@@ -92,13 +93,35 @@ def measure_polar_contacts(Name_of_ligand):
     cmd.show("labels", f"{Name_of_ligand}_polar_conts")
     return
 
+def align(Name_of_obj_1, Name_of_obj_2):
+    cmd.align(f"{Name_of_obj_1}",f"{Name_of_obj_2}")
+    return
+
+def RMSD(Name_of_obj_1, Name_of_obj_2):
+    cmd.align(f"{Name_of_obj_1}",f"{Name_of_obj_2}")
+    return
+
+def set_transparency(representation, value, residues):
+    cmd.set(f"{representation}_transparency", f"{value}", f"resi {residues}")
+    return
+
+def set_color(representation, value):
+    cmd.set(f"{representation}_color", f"{value}")
+    return
+
+def set_bg_color(value):
+    cmd.bg_color(value)
+    return
+
+def set_view(view_of_interest):
+    cmd.set_view(view_of_interest)
 
 #*### Main ###*#
 
 #* Haylee Style Binding Analysis (HSBA)
 
 @cmd.extend
-def hsba():
+def hsba(object_name):
 
     #* PARAMETERS
     #* Default PARAMETERS here
@@ -126,7 +149,7 @@ def hsba():
     """
 
     #* Enter PRESET PARAMETERS from Notebook(.ipynb) here
-    filename = "pdb2ydo.pdb"
+    filename = object_name
 
     Name_of_ligand = "ADN" 
     Ligand_residue_number = 400
@@ -140,12 +163,18 @@ def hsba():
     Name_of_Full_binding_pocket = "Binding_pocket"
 
     Obj_property_to_Hide = "everything"
-    Obj_name_to_hide = filename[:-4]
+    if ".pdb" in filename:
+        Obj_name_to_hide = filename[:-4]
+    else:
+        Obj_name_to_hide = filename
 
     representation_to_hide = "cartoon"
     Obj_whose_cartoon_you_want_to_Hide = "Binding_pocket"
 
-    Obj_name_to_delete = filename[:-4]
+    if ".pdb" in filename:
+        Obj_name_to_delete = filename[:-4]
+    else:
+        Obj_name_to_delete = filename
 
 
     #* CODE RUN
@@ -168,4 +197,40 @@ def hsba():
     find_polar_contacts(Name_of_ligand)
     measure_polar_contacts(Name_of_ligand)
 
+    return
+
+#* Haylee Style Binding Analysis (HSBA)
+
+@cmd.extend
+def align_and_orient(obj_1, obj_2):
+
+    """
+    Align the ligand to the protein,
+    and orient the protein to show ligand of interest
+    (Keeps the orientation consistent)
+    """
+
+    Name_of_obj_1 = obj_1
+    Name_of_obj_2 = obj_2
+
+    align(Name_of_obj_1, Name_of_obj_2)
+
+    #* Enter PRESET PARAMETERS from Notebook(.ipynb) here
+
+    representation_to_hide = "cartoon"
+    Obj_whose_cartoon_you_want_to_Hide = "resi 266-291"
+
+    view_of_interest = "(\
+     0.371393293,    0.304631203,   -0.877057135,\
+     0.424994588,   -0.895621717,   -0.131108478,\
+    -0.825472653,   -0.324035168,   -0.462101817,\
+    -0.001281321,   -0.000470711,  -39.313049316,\
+    31.598876953,    9.013586998,  -16.942543030,\
+  -375.424896240,  455.384063721,  -20.000000000 )"
+
+    hide_cartoon(representation_to_hide, Obj_whose_cartoon_you_want_to_Hide)
+    set_color("cartoon", "white")
+    set_bg_color("white")
+    set_view(view_of_interest)  
+    
     return

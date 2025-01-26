@@ -208,10 +208,10 @@ def hsba(object_name):
 #* Aligns and orients the same protein but with different ligands
 # This function is EXCELLENT for creating consistently aigned images <3
 @cmd.extend
-def align_and_orient(obj_1, obj_2):
+def align_and_orient(obj_1, obj_2=""):
 
     """
-    Align the ligand to the protein,
+    Align the protein to another protein,
     and orient the protein to show ligand of interest
     (Keeps the orientation consistent)
     """
@@ -225,18 +225,28 @@ def align_and_orient(obj_1, obj_2):
     representation_to_hide = "cartoon"
     Obj_whose_cartoon_you_want_to_Hide = "resi 266-291"
 
-    view_of_interest = "(\
+    aligned_view_of_interest = "(\
      0.371393293,    0.304631203,   -0.877057135,\
      0.424994588,   -0.895621717,   -0.131108478,\
     -0.825472653,   -0.324035168,   -0.462101817,\
     -0.001281321,   -0.000470711,  -39.313049316,\
     31.598876953,    9.013586998,  -16.942543030,\
   -375.424896240,  455.384063721,  -20.000000000 )"
-
+    
+    singular_view_of_interest = "(\
+    -0.287070036,   -0.255746454,    0.923137307,\
+     0.477690846,   -0.873542368,   -0.093456171,\
+     0.830299854,    0.414147615,    0.372936934,\
+    -0.000029288,    0.000003709,  -38.392292023,\
+   -29.723110199,    8.598756790,  -22.384565353,\
+  -6225.533691406, 6302.318359375,  -20.000000000 )"
     
     #* CODE RUN
-
-    align(Name_of_obj_1, Name_of_obj_2)
+    if Name_of_obj_2 != "":
+        align(Name_of_obj_1, Name_of_obj_2)
+        set_view(aligned_view_of_interest)
+    else:
+        set_view(singular_view_of_interest)
 
     hide_cartoon(representation_to_hide, Obj_whose_cartoon_you_want_to_Hide)
     remove_solvent("SOG")  
@@ -244,6 +254,10 @@ def align_and_orient(obj_1, obj_2):
     set_color("cartoon", "white")
     set_bg_color("white")
 
-    set_view(view_of_interest)
     
+    
+    return
+
+@cmd.extend
+def show_interacting_residues():
     return

@@ -1,7 +1,6 @@
 from pymol import cmd
 
 
-
 #* CODE RUN
 
 #! Note To User: This only works if you launch VSCode through Anaconda Navigator

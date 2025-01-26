@@ -115,7 +115,11 @@ def set_bg_color(value):
 
 def set_view(view_of_interest):
     cmd.set_view(view_of_interest)
+    return
 
+def remove_solvent(solvent_resn):
+    cmd.remove(f"resn {solvent_resn}")
+    return
 #*### Main ###*#
 
 #* Haylee Style Binding Analysis (HSBA)
@@ -231,6 +235,7 @@ def align_and_orient(obj_1, obj_2):
     hide_cartoon(representation_to_hide, Obj_whose_cartoon_you_want_to_Hide)
     set_color("cartoon", "white")
     set_bg_color("white")
-    set_view(view_of_interest)  
+    set_view(view_of_interest)
+    remove_solvent("SOG")  
     
     return

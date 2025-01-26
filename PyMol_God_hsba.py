@@ -120,10 +120,12 @@ def set_view(view_of_interest):
 def remove_solvent(solvent_resn):
     cmd.remove(f"resn {solvent_resn}")
     return
+
+################
 #*### Main ###*#
+################
 
 #* Haylee Style Binding Analysis (HSBA)
-
 @cmd.extend
 def hsba(object_name):
 
@@ -203,8 +205,8 @@ def hsba(object_name):
 
     return
 
-#* Haylee Style Binding Analysis (HSBA)
-
+#* Aligns and orients the same protein but with different ligands
+# This function is EXCELLENT for creating consistently aigned images <3
 @cmd.extend
 def align_and_orient(obj_1, obj_2):
 
@@ -217,7 +219,6 @@ def align_and_orient(obj_1, obj_2):
     Name_of_obj_1 = obj_1
     Name_of_obj_2 = obj_2
 
-    align(Name_of_obj_1, Name_of_obj_2)
 
     #* Enter PRESET PARAMETERS from Notebook(.ipynb) here
 
@@ -232,10 +233,17 @@ def align_and_orient(obj_1, obj_2):
     31.598876953,    9.013586998,  -16.942543030,\
   -375.424896240,  455.384063721,  -20.000000000 )"
 
+    
+    #* CODE RUN
+
+    align(Name_of_obj_1, Name_of_obj_2)
+
     hide_cartoon(representation_to_hide, Obj_whose_cartoon_you_want_to_Hide)
+    remove_solvent("SOG")  
+
     set_color("cartoon", "white")
     set_bg_color("white")
+
     set_view(view_of_interest)
-    remove_solvent("SOG")  
     
     return

@@ -72,12 +72,20 @@ def show_binding_pocket(representation_pocket = "lines"):
     cmd.show(f"{representation_pocket}", "sele")
     return
 
+def side_chain_only_from_resi(residues_of_interest, representation_side_chain = "sticks"):
+    cmd.show(representation_side_chain, f"((byres (resi {residues_of_interest}))&(sc.|(n. CA|n. N&r. PRO)))")
+    return
+
+def side_chain_only_from_obj(obj_of_interest, representation_side_chain = "sticks"):
+    cmd.show(representation_side_chain, f"((byres ({obj_of_interest}))&(sc.|(n. CA|n. N&r. PRO)))")
+    return
+
 def hide_obj(Obj_property_to_Hide, Obj_name_to_hide):
     cmd.hide(Obj_property_to_Hide, f"{Obj_name_to_hide}")
     return
 
-def hide_cartoon(representation_to_hide, Obj_whose_cartoon_you_want_to_Hide):
-    cmd.hide(f"{representation_to_hide}", Obj_whose_cartoon_you_want_to_Hide)
+def hide_cartoon(Obj_whose_cartoon_you_want_to_Hide):
+    cmd.hide("cartoon", Obj_whose_cartoon_you_want_to_Hide)
     return
 
 def delete_obj(obj_name_to_delete):
@@ -198,7 +206,7 @@ def hsba(object_name):
     create_object_from_selection(Name_of_Full_binding_pocket)
 
     hide_obj(Obj_property_to_Hide, Obj_name_to_hide)
-    hide_cartoon(representation_to_hide, Obj_whose_cartoon_you_want_to_Hide)
+    hide_cartoon(Obj_whose_cartoon_you_want_to_Hide)
 
     find_polar_contacts(Name_of_ligand)
     measure_polar_contacts(Name_of_ligand)
@@ -248,7 +256,7 @@ def align_and_orient(obj_1, obj_2=""):
     else:
         set_view(singular_view_of_interest)
 
-    hide_cartoon(representation_to_hide, Obj_whose_cartoon_you_want_to_Hide)
+    hide_cartoon(Obj_whose_cartoon_you_want_to_Hide)
     remove_solvent("SOG")  
 
     set_color("cartoon", "white")
@@ -259,5 +267,42 @@ def align_and_orient(obj_1, obj_2=""):
     return
 
 @cmd.extend
-def show_interacting_residues():
+def show_interacting_residues(residues_of_interest, Obj_of_interest, new_obj_name = "interactions", transparency_of_sticks=0.5):
+
+    """
+    Shows all interacting residues / residues of choice
+    Shows it as sticks, colors it by atom where carbon = white
+    Sets transparency of sticks to that of choice
+    (this last thing helps see through any obstruting structures)
+
+    residues_of_interest: string | res1+res2+res3
+    objects_of_interest: string | ABC
+    """
+
+    # 253+278+277+168+169
+    obj_name = new_obj_name
+    residues_of_interest = residues_of_interest
+    Obj_of_interest = Obj_of_interest
+    trans= transparency_of_sticks
+
+    # * Code Run
+    cmd.create(f"{obj_name}", f"resi {residues_of_interest} and {Obj_of_interest}")
+    side_chain_only_from_obj(f"{obj_name}")
+    hide_cartoon(f"{obj_name}")
+    util.cbaw(f"{obj_name}") 
+    cmd.set("stick_transparency", trans, f"{obj_name}")
+
+    return
+
+@cmd.extend
+def label_interactions_obj(obj_name="interactions"):
+
+    #* Aligns and orients the same protein but with different ligands
+    # This function is EXCELLENT for creating consistently aigned images <3
+
+    """
+    Labels stuff the way I like it for quick ref.
+    """
+    cmd.label(f'''(name CA+C1*+C1' and (byres({obj_name})))''','''"%s%s"%(resn,resi)''')
+    
     return

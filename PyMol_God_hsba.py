@@ -306,3 +306,8 @@ def label_interactions_obj(obj_name="interactions"):
     cmd.label(f'''(name CA+C1*+C1' and (byres({obj_name})))''','''"%s%s"%(resn,resi)''')
     
     return
+
+# align_and_orient pdb2ydo
+# align_and_orient pdb2ydo
+# align_and_orient pdb2ydo, pdb2ydv
+# show_interacting_residues 253+278+277+168+169, pdb2ydo

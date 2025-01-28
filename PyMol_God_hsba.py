@@ -135,7 +135,7 @@ def remove_solvent(solvent_resn):
 
 #* Haylee Style Binding Analysis (HSBA)
 @cmd.extend
-def hsba(object_name):
+def hsba(object_name, Name_of_ligand = "Lig"):
 
     #* PARAMETERS
     #* Default PARAMETERS here
@@ -165,7 +165,7 @@ def hsba(object_name):
     #* Enter PRESET PARAMETERS from Notebook(.ipynb) here
     filename = object_name
 
-    Name_of_ligand = "ADN" 
+    Name_of_ligand = Name_of_ligand
     Ligand_residue_number = 400
 
     radius_of_binding = 8

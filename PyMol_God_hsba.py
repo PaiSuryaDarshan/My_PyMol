@@ -109,8 +109,11 @@ def RMSD(Name_of_obj_1, Name_of_obj_2):
     cmd.align(f"{Name_of_obj_1}",f"{Name_of_obj_2}")
     return
 
-def set_transparency(representation, value, residues):
-    cmd.set(f"{representation}_transparency", f"{value}", f"resi {residues}")
+def set_transparency(representation, value, residues=""):
+    if residues != "":
+        cmd.set(f"{representation}_transparency", value, f"resi {residues}")
+    else:
+        cmd.set(f"{representation}_transparency", value)
     return
 
 def set_color(representation, value):
@@ -163,10 +166,11 @@ def hsba(object_name, Name_of_ligand = "Lig"):
     """
 
     #* Enter PRESET PARAMETERS from Notebook(.ipynb) here
-    filename = object_name
+    filename = "4w6z.pdb"
 
-    Name_of_ligand = Name_of_ligand
-    Ligand_residue_number = 400
+    Name_of_ligand = "NAD+" 
+    Ligand_residue_number = "403 in chain A"
+
 
     radius_of_binding = 8
     representation_pocket = "lines"
@@ -177,6 +181,7 @@ def hsba(object_name, Name_of_ligand = "Lig"):
     Name_of_Full_binding_pocket = "Binding_pocket"
 
     Obj_property_to_Hide = "everything"
+
     if ".pdb" in filename:
         Obj_name_to_hide = filename[:-4]
     else:
@@ -307,6 +312,13 @@ def label_interactions_obj(obj_name="interactions"):
     
     return
 
+@cmd.extend
+def pai_style(representation_side_chain, residues_of_interest):
+    cmd.show(representation_side_chain, f"((byres ({residues_of_interest}))&(sc.|(n. CA|n. N&r. PRO)))")
+    cmd.label(f'''(name CA+C1*+C1' and (byres({residues_of_interest})))''','''"%s%s"%(resn,resi)''')
+    set_transparency("cartoon", 0.9)
+    util.cnc(residues_of_interest)
+    return
 # align_and_orient pdb2ydo
 # align_and_orient pdb2ydo
 # align_and_orient pdb2ydo, pdb2ydv

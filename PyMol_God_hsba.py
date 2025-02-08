@@ -166,11 +166,10 @@ def hsba(object_name, Name_of_ligand = "Lig"):
     """
 
     #* Enter PRESET PARAMETERS from Notebook(.ipynb) here
-    filename = "4w6z.pdb"
+    filename = object_name
 
-    Name_of_ligand = "NAD+" 
-    Ligand_residue_number = "403 in chain A"
-
+    Name_of_ligand = "ADN" 
+    Ligand_residue_number = 400
 
     radius_of_binding = 8
     representation_pocket = "lines"
@@ -195,8 +194,85 @@ def hsba(object_name, Name_of_ligand = "Lig"):
     else:
         Obj_name_to_delete = filename
 
+    #* CODE RUN
+
+    extract_object_from_resi(Name_of_ligand, Ligand_residue_number)
+
+    select_ligand(Ligand_residue_number)
+    select_water_nearby(radius_of_water)
+    show_water_nearby(representation_water)
+
+    select_ligand(Ligand_residue_number)
+    select_binding_pocket(radius_of_binding)
+    show_binding_pocket(representation_pocket)
+
+    create_object_from_selection(Name_of_Full_binding_pocket)
+
+    hide_obj(Obj_property_to_Hide, Obj_name_to_hide)
+    hide_cartoon(Obj_whose_cartoon_you_want_to_Hide)
+
+    find_polar_contacts(Name_of_ligand)
+    measure_polar_contacts(Name_of_ligand)
+
+    return
+
+@cmd.extend
+def hsba_SwissDock(Ligand_name, Name_of_ligand = "Lig"):
+
+    #* PARAMETERS
+    #* Default PARAMETERS here
+    """
+    filename = "protein.pdb"
+
+    Name_of_ligand = "LIG" 
+    Ligand_residue_number = 400
+
+    radius_of_binding = 8
+    representation_pocket = "lines"
+
+    radius_of_water = 4
+    representation_water = "nb_spheres"
+
+    Name_of_Full_binding_pocket = "Binding_pocket"
+
+    Obj_property_to_Hide = "everything"
+    Obj_name_to_hide = filename[:-4]
+
+    representation_to_hide = "cartoon"
+    Obj_whose_cartoon_you_want_to_Hide = "Binding_pocket"
+
+    Obj_name_to_delete = filename[:-4]
+    """
+
+    #* Enter PRESET PARAMETERS from Notebook(.ipynb) here
+    filename = "irrelevant"
+
+    Name_of_ligand = Name_of_ligand 
+    Ligand_residue_number = 1
+
+    radius_of_binding = 8
+    representation_pocket = "lines"
+
+    radius_of_water = 4
+    representation_water = "nb_spheres"
+
+    Name_of_Full_binding_pocket = "Binding_pocket"
+
+    Obj_property_to_Hide = "everything"
+
+    Obj_name_to_hide = "group01"
+
+    representation_to_hide = "cartoon"
+    Obj_whose_cartoon_you_want_to_Hide = "Binding_pocket"
+
+    if ".pdb" in filename:
+        Obj_name_to_delete = filename[:-4]
+    else:
+        Obj_name_to_delete = filename
 
     #* CODE RUN
+
+    cmd.group(cmd.get_unused_name("group01"),f"{Ligand_name}, receptor",quiet=0)
 
     extract_object_from_resi(Name_of_ligand, Ligand_residue_number)
 
@@ -319,7 +395,18 @@ def pai_style(representation_side_chain, residues_of_interest):
     set_transparency("cartoon", 0.9)
     util.cnc(residues_of_interest)
     return
-# align_and_orient pdb2ydo
-# align_and_orient pdb2ydo
-# align_and_orient pdb2ydo, pdb2ydv
-# show_interacting_residues 253+278+277+168+169, pdb2ydo
+
+@cmd.extend
+def SPF(object_name):
+
+    """
+    Show Pharmacaphore Fingerprint
+
+    """
+
+    residues_of_interest = "253+278+277+168+169+88"
+
+    show_interacting_residues(residues_of_interest, f"{object_name}", "fingerprint")    
+    label_interactions_obj("fingerprint")
+
+    return  

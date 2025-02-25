@@ -347,6 +347,65 @@ def align_and_orient(obj_1, obj_2=""):
     
     return
 
+@cmd.extend 
+def align_and_orient_2(obj_1, obj_2=""):
+
+    """
+    Align the protein to another protein,
+    and orient the protein to show ligand of interest
+    (Keeps the orientation consistent)
+    """
+
+    Name_of_obj_1 = obj_1
+    Name_of_obj_2 = obj_2
+
+
+    #* Enter PRESET PARAMETERS from Notebook(.ipynb) here
+
+    representation_to_hide = "cartoon"
+    Obj_whose_cartoon_you_want_to_Hide = "resi 266-291"
+
+    aligned_view_of_interest = "(\
+     0.371393293,    0.304631203,   -0.877057135,\
+     0.424994588,   -0.895621717,   -0.131108478,\
+    -0.825472653,   -0.324035168,   -0.462101817,\
+    -0.001281321,   -0.000470711,  -39.313049316,\
+    31.598876953,    9.013586998,  -16.942543030,\
+  -375.424896240,  455.384063721,  -20.000000000 )"
+    
+    singular_view_of_interest = "(\
+    -0.576076627,    0.032612275,    0.816744387,\
+     0.554881990,   -0.718096852,    0.420050710,\
+     0.600199580,    0.695178926,    0.395583093,\
+     0.000000000,    0.000000000,  -54.548500061,\
+   -29.258552551,    8.441627502,  -22.931236267,\
+  -79972.296875000, 80081.390625000,  -20.000000000 )"
+    
+#     (\
+#     -0.575957119,   -0.194436401,    0.794018865,\
+#      0.556095123,   -0.805127919,    0.206219062,\
+#      0.599189520,    0.560324311,    0.571845293,\
+#      0.000000000,    0.000000000,  -54.548500061,\
+#    -29.258552551,    8.441627502,  -22.931236267,\
+#   -79972.296875000, 80081.390625000,  -20.000000000 )
+    
+    #* CODE RUN
+    if Name_of_obj_2 != "":
+        align(Name_of_obj_1, Name_of_obj_2)
+        set_view(aligned_view_of_interest)
+    else:
+        set_view(singular_view_of_interest)
+
+    hide_cartoon(Obj_whose_cartoon_you_want_to_Hide)
+    remove_solvent("SOG")  
+
+    set_color("cartoon", "white")
+    set_bg_color("white")
+
+    
+    
+    return
+ 
 @cmd.extend
 def show_interacting_residues(residues_of_interest, Obj_of_interest, new_obj_name = "interactions", transparency_of_sticks=0.5):
 
@@ -410,3 +469,8 @@ def SPF(object_name):
     label_interactions_obj("fingerprint")
 
     return  
+
+@cmd.extend
+def Pai_save(save_name):
+    cmd.png(f"/Users/pai.suryadarshan/Downloads/{save_name}.png", int width=0, int height=0, float dpi=-1, int ray=0, int quiet=0)
+    return

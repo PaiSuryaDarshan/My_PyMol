@@ -471,6 +471,6 @@ def SPF(object_name):
     return  
 
 @cmd.extend
-def Pai_save(save_name):
+def pai_save(save_name):
     cmd.png(f"/Users/pai.suryadarshan/Downloads/{save_name}.png", width=0, height=0, dpi=-1, ray=0, quiet=0)
     return

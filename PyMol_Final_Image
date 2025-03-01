@@ -1,0 +1,77 @@
+from pymol import cmd
+from pymol import util
+
+# * Preamble
+def set_transparency(representation, value, residues=""):
+    if residues != "":
+        cmd.set(f"{representation}_transparency", value, f"resi {residues}")
+    else:
+        cmd.set(f"{representation}_transparency", value)
+    return
+
+def set_color(representation, value):
+    cmd.set(f"{representation}_color", f"{value}")
+
+
+# * Views
+@cmd.extend
+def pai_view_1():
+
+    """
+    View Angle Preset 1
+    """
+
+    #* Enter PRESET PARAMETERS from Notebook(.ipynb) here
+
+    Obj_whose_cartoon_you_want_to_Hide = "resi 266-291"
+    
+    singular_view_of_interest = "(\
+    -0.287070036,   -0.255746454,    0.923137307,\
+     0.477690846,   -0.873542368,   -0.093456171,\
+     0.830299854,    0.414147615,    0.372936934,\
+    -0.000029288,    0.000003709,  -38.392292023,\
+   -29.723110199,    8.598756790,  -22.384565353,\
+  -6225.533691406, 6302.318359375,  -20.000000000 )"
+    
+    #* CODE RUN
+
+    cmd.set_view(singular_view_of_interest)
+    cmd.hide("cartoon", Obj_whose_cartoon_you_want_to_Hide)
+    cmd.remove(f"resn SOG")
+    set_color("cartoon", "white")
+    cmd.bg_color("white")
+    
+    return
+
+@cmd.extend 
+def pai_view_2():
+
+    """
+    View Angle Preset 2
+    """
+
+    #* Enter PRESET PARAMETERS from Notebook(.ipynb) here
+
+    Obj_whose_cartoon_you_want_to_Hide = "resi 266-291"
+    
+    singular_view_of_interest = "(\
+    -0.576076627,    0.032612275,    0.816744387,\
+     0.554881990,   -0.718096852,    0.420050710,\
+     0.600199580,    0.695178926,    0.395583093,\
+     0.000000000,    0.000000000,  -54.548500061,\
+   -29.258552551,    8.441627502,  -22.931236267,\
+  -79972.296875000, 80081.390625000,  -20.000000000 )"
+    
+    #* CODE RUN
+    cmd.set_view(singular_view_of_interest)
+
+    cmd.hide("cartoon", Obj_whose_cartoon_you_want_to_Hide)
+    cmd.remove(f"resn SOG")
+
+    set_color("cartoon", "white")
+    cmd.bg_color("white")
+
+    
+    
+    return
+ 

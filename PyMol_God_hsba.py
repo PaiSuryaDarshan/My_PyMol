@@ -92,13 +92,21 @@ def delete_obj(obj_name_to_delete):
     cmd.delete(f"{obj_name_to_delete}")
     return
 
+def set_new_hbond_cutoff():
+    cmd.set("h_bond_cutoff_center", 3.7)
+    cmd.set("h_bond_cutoff_edge", 3.7)
+    return
+
 def find_polar_contacts(Name_of_ligand):
+    set_new_hbond_cutoff()
     cmd.dist(f"{Name_of_ligand}_polar_conts",f"{Name_of_ligand}",f"(not {Name_of_ligand})",quiet=1,mode=2,label=0,reset=1)
+    cmd.dist(f"{Name_of_ligand}_pipi_conts",f"{Name_of_ligand}",f"(not {Name_of_ligand})",quiet=1,mode=6,label=0,reset=1)
     cmd.enable(f"{Name_of_ligand}_polar_conts")
     return
 
 def measure_polar_contacts(Name_of_ligand):
     cmd.show("labels", f"{Name_of_ligand}_polar_conts")
+    cmd.show("labels", f"{Name_of_ligand}_pipi_conts")
     return
 
 def align(Name_of_obj_1, Name_of_obj_2):
@@ -121,7 +129,7 @@ def set_color(representation, value):
     return
 
 def set_bg_color(value):
-    cmd.bg_color(value)
+    cmd.bg_color(value) 
     return
 
 def set_view(view_of_interest):
@@ -210,6 +218,7 @@ def hsba(object_name, Name_of_ligand = "Lig"):
 
     hide_obj(Obj_property_to_Hide, Obj_name_to_hide)
     hide_cartoon(Obj_whose_cartoon_you_want_to_Hide)
+    hide_cartoon(Name_of_Full_binding_pocket)
 
     find_polar_contacts(Name_of_ligand)
     measure_polar_contacts(Name_of_ligand)
@@ -286,11 +295,16 @@ def hsba_SwissDock(Ligand_name, Name_of_ligand = "Lig"):
 
     create_object_from_selection(Name_of_Full_binding_pocket)
 
+    cmd.hide("((byres (Binding_pocket))&(bb.&!(n. CA|n. N&r. PRO)))")
+    cmd.select("main", "resi 88+168+169+250+253+277+278")
+
     hide_obj(Obj_property_to_Hide, Obj_name_to_hide)
     hide_cartoon(Obj_whose_cartoon_you_want_to_Hide)
 
     find_polar_contacts(Name_of_ligand)
     measure_polar_contacts(Name_of_ligand)
+
+    cmd.select("main", "resi 88+168+169+250+253+277+278")
 
     return
 

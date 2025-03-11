@@ -1,7 +1,7 @@
 from pymol import cmd
 from pymol import util
 
-# Pai is the best 😎
+# Pai is the best :sunglasses:
 
 #* CODE RUN
 
